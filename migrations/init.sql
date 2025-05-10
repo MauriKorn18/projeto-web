@@ -1,31 +1,27 @@
--- Criação da tabela de autores
-CREATE TABLE IF NOT EXISTS autor (
+-- Criação da tabela de user
+CREATE TABLE IF NOT EXISTS usuarios (
   id SERIAL PRIMARY KEY,
   nome VARCHAR(100) NOT NULL,
-  nacionalidade VARCHAR (50),
+  email VARCHAR (70),
   data_nascimento DATE
 );
 
-CREATE TABLE IF NOT EXISTS livro (
+CREATE TABLE IF NOT EXISTS tarefa (
   id SERIAL PRIMARY KEY,
   titulo VARCHAR(200) NOT NULL,
-  ano_publicacao INTEGER NOT NULL,
-  paginas INTEGER NOT NULL,
-  isbn VARCHAR(20) UNIQUE,
-  autor_id INTEGER NOT NULL,
-  FOREIGN KEY (autor_id) REFERENCES autor(id)
+  descricao VARCHAR(500) NOT NULL,
+  data_criacao DATE,
+  data_entrega DATE,
+  concluido BOOLEAN NOT NULL,
+  usuarios_id UUID,
+  FOREIGN KEY (usuarios_id) REFERENCES usuarios(id)
 );
 
 CREATE TABLE IF NOT EXISTS categoria (
   id SERIAL PRIMARY KEY,
-  NOME VARCHAR(50) NOT NULL,
-  dercricao TEXT
-);
-
-CREATE TABLE livro_categorias (
-  livro_id INTEGER NOT NULL,
-  categoria_id INTEGER NOT NULL,
-  PRIMARY KEY (livro_id, categoria_id),
-  FOREIGN KEY (livro_id) REFERENCES livro(id),
-  FOREIGN KEY (categoria_id) REFERENCES categoria(id)
+  nome VARCHAR(50) NOT NULL,
+  descricao TEXT,
+  data_criacao DATE,
+  tarefa_id INTEGER,
+  FOREIGN KEY (tarefa_id) REFERENCES tarefa(id)
 );
