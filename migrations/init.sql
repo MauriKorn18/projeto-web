@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS tarefa (
   data_criacao DATE,
   data_entrega DATE,
   concluido BOOLEAN NOT NULL,
-  usuarios_id UUID,
+  usuarios_id INTEGER,
   FOREIGN KEY (usuarios_id) REFERENCES usuarios(id)
 );
 
