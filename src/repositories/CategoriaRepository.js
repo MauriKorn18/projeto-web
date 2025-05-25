@@ -1,5 +1,5 @@
 const db = require('../database');
-const Categoria = require('../models/Categoria');
+const Categoria = require('../models/CategoriaModel');
 
 class CategoriaRepository {
   async findAll() {
