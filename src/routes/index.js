@@ -5,10 +5,10 @@ const TarefaController = require('../controllers/TarefaController');
 const CategoriaController = require('../controllers/CategoriaController');
 
 
-router.post('/app_usuarios', UsuariosController.criarUsuario);
-router.get('/app_usuarios', UsuariosController.listarUsuario);
-router.put('/app_usuarios/:id', UsuariosController.editarUsuario);
-router.delete('/app_usuarios/:id', UsuariosController.excluirusuario);
+router.post('/usuarios', UsuariosController.criarUsuario);
+router.get('/usuarios', UsuariosController.listarUsuario);
+router.put('/usuarios/:id', UsuariosController.editarUsuario);
+router.delete('/usuarios/:id', UsuariosController.excluirusuario);
 
 router.post('/tarefas', TarefaController.criarTarefa);
 router.get('/tarefas', TarefaController.listarTarefas);

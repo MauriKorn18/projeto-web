@@ -1,43 +1,42 @@
 const db = require('../config/db');
 
-async function criarTarefaService({ titulo, descricao, data_criacao, data_entrega, concluido = false, usuarios_id }) {
+async function criarUsuarioService({ nome, email, data_nascimento }) {
   const query = `
-    INSERT INTO tarefa (titulo, descricao, data_criacao, data_entrega, concluido, usuarios_id)
-    VALUES ($1, $2, $3, $4, $5, $6)
+    INSERT INTO usuarios (nome, email, data_nascimento)
+    VALUES ($1, $2, $3)
     RETURNING *`;
-  const values = [titulo, descricao, data_criacao, data_entrega, concluido, usuarios_id];
+  const values = [nome, email, data_nascimento];
 
   const result = await db.query(query, values);
   return result.rows[0];
 }
 
-async function listarTarefasService() {
-  const query = 'SELECT * FROM tarefa ORDER BY data_criacao DESC';
-  const result = await db.query(query);
+async function listarUsuariosService() {
+  const result = await db.query('SELECT * FROM usuarios');
   return result.rows;
 }
 
-async function editarTarefaService(id, { titulo, descricao, data_entrega, concluido }) {
+async function editarUsuarioService(id, { nome, email, data_nascimento }) {
   const query = `
-    UPDATE tarefa
-    SET titulo = $1, descricao = $2, data_entrega = $3, concluido = $4
-    WHERE id = $5
+    UPDATE usuarios
+    SET nome = $1, email = $2, data_nascimento = $3
+    WHERE id = $4
     RETURNING *`;
-  const values = [titulo, descricao, data_entrega, concluido, id];
+  const values = [nome, email, data_nascimento, id];
 
   const result = await db.query(query, values);
   return result.rows[0];
 }
 
-async function excluirTarefaService(id) {
-  const query = 'DELETE FROM tarefa WHERE id = $1 RETURNING *';
+async function excluirUsuarioService(id) {
+  const query = 'DELETE FROM usuarios WHERE id = $1 RETURNING *';
   const result = await db.query(query, [id]);
   return result.rows[0];
 }
 
 module.exports = {
-  criarTarefaService,
-  listarTarefasService,
-  editarTarefaService,
-  excluirTarefaService,
+  criarUsuarioService,
+  listarUsuariosService,
+  editarUsuarioService,
+  excluirUsuarioService,
 };
