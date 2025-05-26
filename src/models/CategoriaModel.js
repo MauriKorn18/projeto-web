@@ -1,38 +1,38 @@
 const db = require('../config/db');
 
-const Categoria = {
-  async criar({ nome, descricao, ordem, concluido = false, tarefa_is }) {
+const Usuario = {
+  async criar({ nome, email, data_nascimento }) {
     const query = `
-      INSERT INTO categoria (nome, descricao, ordem, concluido, tarefa_is)
-      VALUES ($1, $2, $3, $4, $5)
+      INSERT INTO usuarios (nome, email, data_nascimento)
+      VALUES ($1, $2, $3)
       RETURNING *`;
-    const values = [nome, descricao, ordem, concluido, tarefa_is];
+    const values = [nome, email, data_nascimento];
 
     const result = await db.query(query, values);
     return result.rows[0];
   },
 
   async listar() {
-    const result = await db.query('SELECT * FROM categoria ORDER BY ordem ASC');
+    const result = await db.query('SELECT * FROM usuarios ORDER BY id ASC');
     return result.rows;
   },
 
-  async atualizar(id, { nome, descricao, ordem, concluido }) {
+  async atualizar(id, { nome, email, data_nascimento }) {
     const query = `
-      UPDATE categoria
-      SET nome = $1, descricao = $2, ordem = $3, concluido = $4
-      WHERE id = $5
+      UPDATE usuarios
+      SET nome = $1, email = $2, data_nascimento = $3
+      WHERE id = $4
       RETURNING *`;
-    const values = [nome, descricao, ordem, concluido, id];
+    const values = [nome, email, data_nascimento, id];
 
     const result = await db.query(query, values);
     return result.rows[0];
   },
 
   async excluir(id) {
-    const result = await db.query('DELETE FROM categoria WHERE id = $1 RETURNING *', [id]);
+    const result = await db.query('DELETE FROM usuarios WHERE id = $1 RETURNING *', [id]);
     return result.rows[0];
   }
 };
 
-module.exports = Categoria;
+module.exports = Usuario;

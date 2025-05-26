@@ -1,19 +1,19 @@
 const db = require('../config/db');
 
 const Tarefa = {
-  async criar({ titulo, descricao, data_de_criacao, data_entrega, concluido = false, usuarios_id }) {
+  async criar({ titulo, descricao, data_criacao, data_entrega, concluido = false, usuarios_id }) {
     const query = `
-      INSERT INTO tarefa (titulo, descricao, data_de_criacao, data_entrega, concluido, usuarios_id)
+      INSERT INTO tarefa (titulo, descricao, data_criacao, data_entrega, concluido, usuarios_id)
       VALUES ($1, $2, $3, $4, $5, $6)
       RETURNING *`;
-    const values = [titulo, descricao, data_de_criacao, data_entrega, concluido, usuarios_id];
+    const values = [titulo, descricao, data_criacao, data_entrega, concluido, usuarios_id];
 
     const result = await db.query(query, values);
     return result.rows[0];
   },
 
   async listar() {
-    const result = await db.query('SELECT * FROM tarefa ORDER BY data_de_criacao DESC');
+    const result = await db.query('SELECT * FROM tarefa ORDER BY data_criacao DESC');
     return result.rows;
   },
 

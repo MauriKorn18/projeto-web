@@ -1,42 +1,43 @@
 const db = require('../config/db');
 
-async function criarUsuarioService({ nome, email, senha_hash }) {
+async function criarTarefaService({ titulo, descricao, data_criacao, data_entrega, concluido = false, usuarios_id }) {
   const query = `
-    INSERT INTO app_user (nome, email, senha_hash)
-    VALUES ($1, $2, $3)
+    INSERT INTO tarefa (titulo, descricao, data_criacao, data_entrega, concluido, usuarios_id)
+    VALUES ($1, $2, $3, $4, $5, $6)
     RETURNING *`;
-  const values = [nome, email, senha_hash];
+  const values = [titulo, descricao, data_criacao, data_entrega, concluido, usuarios_id];
 
   const result = await db.query(query, values);
   return result.rows[0];
 }
 
-async function listarUsuariosService() {
-  const result = await db.query('SELECT * FROM app_user');
+async function listarTarefasService() {
+  const query = 'SELECT * FROM tarefa ORDER BY data_criacao DESC';
+  const result = await db.query(query);
   return result.rows;
 }
 
-async function editarUsuarioService(id, { nome, email, senha_hash }) {
+async function editarTarefaService(id, { titulo, descricao, data_entrega, concluido }) {
   const query = `
-    UPDATE app_user
-    SET nome = $1, email = $2, senha_hash = $3
-    WHERE id = $4
+    UPDATE tarefa
+    SET titulo = $1, descricao = $2, data_entrega = $3, concluido = $4
+    WHERE id = $5
     RETURNING *`;
-  const values = [nome, email, senha_hash, id];
+  const values = [titulo, descricao, data_entrega, concluido, id];
 
   const result = await db.query(query, values);
   return result.rows[0];
 }
 
-async function excluirUsuarioService(id) {
-  const query = 'DELETE FROM app_user WHERE id = $1 RETURNING *';
+async function excluirTarefaService(id) {
+  const query = 'DELETE FROM tarefa WHERE id = $1 RETURNING *';
   const result = await db.query(query, [id]);
   return result.rows[0];
 }
 
 module.exports = {
-  criarUsuarioService,
-  listarUsuariosService,
-  editarUsuarioService,
-  excluirUsuarioService,
+  criarTarefaService,
+  listarTarefasService,
+  editarTarefaService,
+  excluirTarefaService,
 };
