@@ -1,11 +1,11 @@
 const db = require('../config/db');
 
-async function criarCategoriaService({ title, descricao, ordem, concluido = false, id_tarefa }) {
+async function criarCategoriaService({ nome, descricao, ordem, concluido = false, tarefa_id }) {
   const query = `
-    INSERT INTO categoria (title, descricao, ordem, concluido, id_tarefa)
+    INSERT INTO categoria (nome, descricao, ordem, concluido, tarefa_id)
     VALUES ($1, $2, $3, $4, $5)
     RETURNING *`;
-  const values = [title, descricao, ordem, concluido, id_tarefa];
+  const values = [nome, descricao, ordem, concluido, tarefa_id];
 
   const result = await db.query(query, values);
   return result.rows[0];
@@ -16,13 +16,13 @@ async function listarCategoriasService() {
   return result.rows;
 }
 
-async function editarCategoriaService(id, { title, descricao, ordem, concluido }) {
+async function editarCategoriaService(id, { nome, descricao, ordem, concluido }) {
   const query = `
     UPDATE categoria
-    SET title = $1, descricao = $2, ordem = $3, concluido = $4
+    SET nome = $1, descricao = $2, ordem = $3, concluido = $4
     WHERE id = $5
     RETURNING *`;
-  const values = [title, descricao, ordem, concluido, id];
+  const values = [nome, descricao, ordem, concluido, id];
 
   const result = await db.query(query, values);
   return result.rows[0];

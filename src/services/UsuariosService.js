@@ -1,11 +1,11 @@
 const db = require('../config/db');
 
-async function criarUsuarioService({ username, email, senha_hash }) {
+async function criarUsuarioService({ nome, email, senha_hash }) {
   const query = `
-    INSERT INTO app_user (username, email, senha_hash)
+    INSERT INTO app_user (nome, email, senha_hash)
     VALUES ($1, $2, $3)
     RETURNING *`;
-  const values = [username, email, senha_hash];
+  const values = [nome, email, senha_hash];
 
   const result = await db.query(query, values);
   return result.rows[0];
@@ -16,13 +16,13 @@ async function listarUsuariosService() {
   return result.rows;
 }
 
-async function editarUsuarioService(id, { username, email, senha_hash }) {
+async function editarUsuarioService(id, { nome, email, senha_hash }) {
   const query = `
     UPDATE app_user
-    SET username = $1, email = $2, senha_hash = $3
+    SET nome = $1, email = $2, senha_hash = $3
     WHERE id = $4
     RETURNING *`;
-  const values = [username, email, senha_hash, id];
+  const values = [nome, email, senha_hash, id];
 
   const result = await db.query(query, values);
   return result.rows[0];
