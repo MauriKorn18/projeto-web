@@ -7,38 +7,47 @@ O sistema desenvolvido tem como objetivo auxiliar na organização pessoal por m
  ```
  PROJETO_INDIVIDUALMOD2
 ├── 📁 assets
+|   ├── diagrama_mvc.png
 │   └── modelo-branco.png
-├── 📁 config
-│   └── db.js
-├── 📁 controllers
-│   └── HomeController.js
 ├── 📁 documentos
 |   ├── README.md
 |   └── wad.md
-├── 📁 migrations
-|   ├── 📁 scripts
-|   |   └── 202505091130_usuarios.sql
-│   ├── init.sql
-│   ├── runMigration.js
-|   └── runSQLScript.js
-├── 📁 models
-│   └── user.js
-├── 📁 node_modules
-├── 📁 routes
-│   └── index.js
-├── 📁 services
-│   └── userService.js
-├── 📁 styles
-│   └── .gitkeep
-├── 📁 tests
-│   └── example.test.js
+├── 📁 src
+│   └── 📁 config
+|   |   └── db.js
+│   └── 📁 controllers
+|   |   ├── CategoriaController.js
+|   |   ├── TarefaController.js
+|   |   └── UsuariosController.js
+│   └── 📁 migrations
+|   |   └── 📁 scripts
+|   |   |   └── 202505091130_usuarios.sql
+|   |   ├── init.sql
+|   |   ├── runMigration.js
+|   |   └── runSQLScript.js
+│   └── 📁 models
+|   |   ├── CategoriaModel.js
+|   |   ├── TarefaModel.js
+|   |   └── UsuariosModel.js
+│   └── 📁 routes
+|   |   └── index.js
+│   └── 📁 services
+|   |   ├── CategoriaService.js
+|   |   ├── TarefaService.js
+|   |   └── UsuariosService.js
+│   └── 📁 styles
+|   |   └── .gitkeep
+│   └── 📁 routes
+|   |   ├── tarefa.test.js
+|   |   └── usuarios.test.js
 ├── .env
 ├── .env.example
 ├── .gitignore
 ├── package-lock.json
 ├── package.json
-├── server.js
 ├── rest.http
+├── server.js
+├── test.http
 ``` 
 
 ### Como executar o projeto localmente:
