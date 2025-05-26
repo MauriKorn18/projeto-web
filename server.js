@@ -6,13 +6,17 @@ const path = require('path');
 
 app.use(express.json());
 
+// Carregar as rotas
+const routes = require('./src/routes');
+app.use('/api', routes);
+
 // Testa a conexão quando inicia
 db.query('SELECT NOW()')
   .then(result => {
     console.log('Conectado ao banco de dados PostgreSQL');
     console.log(`Hora atual no banco: ${result.rows[0].now}`);
 
-    // Rotas
+    // Rota de teste
     app.get('/', async (req, res) => {
       try {
         const result = await db.query('SELECT NOW()');
