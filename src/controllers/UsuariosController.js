@@ -1,3 +1,4 @@
+const usuarioService = require('../services/UsuarioService');
 const usuarioService = require('../services/UsuariosService');
 
 exports.criarUsuario = async (req, res) => {
