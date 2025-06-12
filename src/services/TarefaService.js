@@ -39,9 +39,16 @@ async function excluirTarefaService(id) {
   return result.rows[0];
 }
 
+async function buscarTarefaPorIdService(id) {
+  const query = 'SELECT * FROM tarefa WHERE id = $1';
+  const result = await db.query(query, [id]);
+  return result.rows[0];
+}
+
 module.exports = {
   criarTarefaService,
   listarTarefasService,
   editarTarefaService,
   excluirTarefaService,
+  buscarTarefaPorIdService
 };

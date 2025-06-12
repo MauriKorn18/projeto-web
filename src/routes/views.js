@@ -8,7 +8,7 @@ const TarefaService = require('../services/TarefaService'); // <- Ajuste se nece
 // Página inicial: lista de tarefas
 router.get('/', async (req, res) => {
     try {
-        const tasks = await TarefaService.listar(); // ou TarefaService.getAll(), dependendo do seu service
+        const tasks = await TarefaService.listarTarefasService();
         res.render('index', { tasks });
     } catch (err) {
         console.error('[GET /] Erro ao carregar tarefas:', err);
