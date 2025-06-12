@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= task ? 'Editar Tarefa' : 'Nova Tarefa' %></title>
+    <link rel="stylesheet" href="/public/styles/main.css">
+</head>
+<body>
+    <div class="container">
+        <h1><%= task ? 'Editar Tarefa' : 'Nova Tarefa' %></h1>
+        <form id="task-form">
+            <input type="hidden" id="task-id" value="<%= task ? task.id : '' %>">
+            
+            <label for="titulo">Título da Tarefa:</label>
+            <input type="text" id="titulo" name="titulo" value="<%= task ? (task.titulo || task.title) : '' %>" required placeholder="Digite o título da tarefa">
+            
+            <label for="descricao">Descrição:</label>
+            <textarea id="descricao" name="descricao" rows="4" placeholder="Digite uma descrição para a tarefa (opcional)"><%= task ? (task.descricao || '') : '' %></textarea>
+            
+            <button type="submit" class="btn"><%= task ? 'Salvar Alterações' : 'Adicionar Tarefa' %></button>
+        </form>
+        <a href="/" class="back-link">← Voltar para a lista</a>
+    </div>
+
+    <script>
+        document.getElementById("task-form").addEventListener("submit", async (event) => {
+            event.preventDefault();
+            
+            const taskId = document.getElementById("task-id").value;
+            const titulo = document.getElementById("titulo").value;
+            const descricao = document.getElementById("descricao").value;
+            
+            const method = taskId ? 'PUT' : 'POST';
+            const url = taskId ? `/api/tarefas/${taskId}` : '/api/tarefas';
+            
+            const taskData = {
+                titulo: titulo,
+                descricao: descricao
+            };
+
+            try {
+                const response = await fetch(url, {
+                    method: method,
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify(taskData)
+                });
+
+                if (response.ok) {
+                    window.location.href = "/";
+                } else {
+                    const errorData = await response.json();
+                    alert(`Erro ao salvar tarefa: ${errorData.error || 'Erro desconhecido'}`);
+                }
+            } catch (error) {
+                console.error('Erro:', error);
+                alert("Erro ao salvar tarefa. Verifique sua conexão.");
+            }
+        });
+    </script>
+</body>
+</html>
+

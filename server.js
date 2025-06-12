@@ -6,25 +6,26 @@ const path = require('path');
 
 app.use(express.json());
 
-// Carregar as rotas
+// Configurar EJS
+app.set('view engine', 'ejs');
+app.set('views', path.join(__dirname, 'views'));
+
+// Servir arquivos estáticos
+app.use("/public", express.static(path.join(__dirname, "public")));
+
+// Carregar as rotas da API
 const routes = require('./src/routes');
 app.use('/api', routes);
+
+// Carregar as rotas das views
+const viewsRoutes = require("./src/routes/views");
+app.use("/", viewsRoutes);
 
 // Testa a conexão quando inicia
 db.query('SELECT NOW()')
   .then(result => {
     console.log('Conectado ao banco de dados PostgreSQL');
     console.log(`Hora atual no banco: ${result.rows[0].now}`);
-
-    // Rota de teste
-    app.get('/', async (req, res) => {
-      try {
-        const result = await db.query('SELECT NOW()');
-        res.send(`Hora atual no banco: ${result.rows[0].now}`);
-      } catch (err) {
-        res.status(500).send('Erro ao conectar com o banco.');
-      }
-    });
 
     const PORT = process.env.PORT || 3000;
     app.listen(PORT, () => {
