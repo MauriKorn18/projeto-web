@@ -12,6 +12,7 @@ O sistema desenvolvido tem como objetivo auxiliar na organização pessoal por m
 ├── 📁 documentos
 |   ├── README.md
 |   └── wad.md
+├── 📁 node_modules
 ├── 📁 src
 │   └── 📁 config
 |   |   └── db.js
@@ -29,15 +30,23 @@ O sistema desenvolvido tem como objetivo auxiliar na organização pessoal por m
 |   |   ├── CategoriaModel.js
 |   |   ├── TarefaModel.js
 |   |   └── UsuariosModel.js
+│   └── 📁 public
+|   |   ├── categorias.js
+|   |   ├── styles.css
+|   |   ├── tarefas.js
+|   |   └── usuarios.js
 │   └── 📁 routes
 |   |   └── index.js
 │   └── 📁 services
 |   |   ├── CategoriaService.js
 |   |   ├── TarefaService.js
 |   |   └── UsuariosService.js
-│   └── 📁 styles
-|   |   └── .gitkeep
-│   └── 📁 routes
+│   └── 📁 views
+|   |   ├── categorias.ejs
+|   |   ├── form.ejs
+|   |   ├── index.ejs
+|   |   └── usuarios.ejs
+│   └── 📁 tests
 |   |   ├── tarefa.test.js
 |   |   └── usuarios.test.js
 ├── .env
