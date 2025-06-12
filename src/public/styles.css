@@ -5,8 +5,8 @@
 }
 
 body {
-    font-family: 'Arial', sans-serif;
-    background-color: #fff;
+    font-family: Verdana, sans-serif;
+    background-color: #fbbd76;
     color: #333;
     line-height: 1.6;
     padding: 20px;
@@ -62,7 +62,7 @@ h1 {
 }
 
 .btn-danger:hover {
-    background-color: #c82333;
+    background-color: #df4e00;
 }
 
 #task-list {
@@ -163,5 +163,13 @@ form select:focus {
         width: 100%;
         justify-content: flex-end;
     }
+
+    input,
+    textarea,
+    select,
+    button,
+    label {
+      font-family: inherit;
+}
 }
 
