@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gerenciador de Tarefas</title>
+  <link rel="stylesheet" href="/public/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Gerenciador de Tarefas</h1>
+
+    <!-- Botão que mostra o formulário -->
+    <div class="add-task-link">
+      <button onclick="document.getElementById('form-nova-tarefa').style.display = 'block'" class="btn">+ Adicionar Nova Tarefa</button>
+    </div>
+
+    <!-- Formulário oculto inicialmente -->
+    <form id="form-nova-tarefa" style="display: none; margin-top: 20px;">
+      <input name="titulo" placeholder="Título" required />
+      <input name="descricao" placeholder="Descrição" />
+      <input name="data_entrega" type="date" />
+      <input type="hidden" name="usuarios_id" value="1" />
+      <button type="submit" class="btn">Salvar</button>
+    </form>
+
+    <!-- Lista de tarefas -->
+    <ul id="task-list">
+      <% if (tasks && tasks.length > 0) { %>
+        <% tasks.forEach(task => { %>
+          <li>
+            <span><%= task.titulo || task.title %></span>
+            <div class="task-actions">
+              <a href="/tarefas/editar/<%= task.id %>" class="btn btn-secondary">Editar</a>
+              <button onclick="deleteTask('<%= task.id %>')" class="btn btn-danger">Excluir</button>
+            </div>
+          </li>
+        <% }) %>
+      <% } else { %>
+        <li style="text-align: center; border: none; box-shadow: none;">
+          <span>Nenhuma tarefa encontrada. Adicione uma nova tarefa!</span>
+        </li>
+      <% } %>
+    </ul>
+  </div>
+
+  <script>
+    document.getElementById("form-nova-tarefa").addEventListener("submit", async function (e) {
+      e.preventDefault();
+
+      const form = e.target;
+      const dados = {
+        titulo: form.titulo.value,
+        descricao: form.descricao.value,
+        data_entrega: form.data_entrega.value,
+        usuarios_id: form.usuarios_id.value || 1
+      };
+
+      try {
+        const response = await fetch("/api/tarefas", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(dados)
+        });
+
+        if (response.ok) {
+          location.reload();
+        } else {
+          const erro = await response.json();
+          alert("Erro ao criar tarefa: " + (erro.error || "Erro desconhecido"));
+        }
+      } catch (err) {
+        console.error("Erro:", err);
+        alert("Erro ao enviar tarefa.");
+      }
+    });
+
+    async function deleteTask(id) {
+      if (confirm("Tem certeza que deseja excluir esta tarefa?")) {
+        try {
+          const response = await fetch(`/api/tarefas/${id}`, { method: 'DELETE' });
+          if (response.ok) {
+            location.reload();
+          } else {
+            alert('Erro ao excluir tarefa.');
+          }
+        } catch (error) {
+          console.error('Erro:', error);
+          alert('Erro ao excluir tarefa.');
+        }
+      }
+    }
+  </script>
+</body>
+</html>

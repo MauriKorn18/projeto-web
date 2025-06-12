@@ -1,7 +1,11 @@
 const db = require('../config/db');
 
 async function criarTarefaService(dados) {
-  const { titulo, descricao, data_criacao, data_entrega, concluido = false, usuarios_id } = dados;
+  let { titulo, descricao, data_criacao, data_entrega, concluido = false, usuarios_id } = dados;
+
+  if (!data_criacao) data_criacao = new Date();
+  if (!usuarios_id) usuarios_id = 1;
+  if (!data_entrega || isNaN(Date.parse(data_entrega))) data_entrega = null;
 
   const query = `
     INSERT INTO tarefa (titulo, descricao, data_criacao, data_entrega, concluido, usuarios_id)
@@ -12,6 +16,7 @@ async function criarTarefaService(dados) {
   const result = await db.query(query, values);
   return result.rows[0];
 }
+
 
 async function listarTarefasService() {
   const query = 'SELECT * FROM tarefa ORDER BY data_criacao DESC';

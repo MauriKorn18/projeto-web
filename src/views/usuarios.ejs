@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gerenciador de Usuários</title>
+  <link rel="stylesheet" href="/public/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Gerenciador de Usuários</h1>
+
+    <div class="add-task-link">
+      <button onclick="document.getElementById('form-usuario').style.display = 'block'" class="btn">+ Adicionar Novo Usuário</button>
+    </div>
+
+    <form id="form-usuario" style="display: none; margin-top: 20px;">
+      <input type="hidden" name="id" />
+      <input name="nome" placeholder="Nome" required />
+      <input name="email" placeholder="Email" />
+      <input name="data_nascimento" type="date" />
+      <button type="submit" class="btn">Salvar</button>
+    </form>
+
+    <div id="usuarios"></div>
+  </div>
+
+  <script src="/public/usuarios.js"></script>
+</body>
+</html>

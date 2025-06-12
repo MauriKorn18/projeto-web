@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Gerenciador de Categorias</title>
+  <link rel="stylesheet" href="/public/styles.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Gerenciador de Categorias</h1>
+
+    <div class="add-task-link">
+      <button onclick="document.getElementById('form-categoria').style.display = 'block'" class="btn">+ Adicionar Nova Categoria</button>
+    </div>
+
+    <form id="form-categoria" style="display: none; margin-top: 20px;">
+      <input type="hidden" name="id" />
+      <input name="nome" placeholder="Nome" required />
+      <input name="descricao" placeholder="Descrição" />
+      <input name="data_criacao" type="date" />
+      <input name="tarefa_id" placeholder="ID da Tarefa" />
+      <button type="submit" class="btn">Salvar</button>
+    </form>
+
+    <div id="categorias"></div>
+  </div>
+
+  <script src="/public/categorias.js"></script>
+</body>
+</html>
