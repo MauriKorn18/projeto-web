@@ -172,3 +172,38 @@ Atualiza informações de uma categoria com base no seu ID.
 
 - DELETE `/api/categorias/:id`
 Deleta uma categoria com base no seu ID.
+
+
+## Interface e Navegação
+- A interface do sistema foi implementada utilizando arquivos `.ejs` para renderização das páginas e arquivos `.js` e `.css` para a interação com o backend e o estilo visual. Os arquivos estão organizados da seguinte forma:
+
+### Estrutura de arquivos de frontend:
+
+````
+📁 src
+├── 📁 public
+│   ├── categorias.js      // Scripts JS para interações da view de categorias
+│   ├── styles.css         // Estilo visual global da aplicação
+│   ├── tarefas.js         // Scripts JS para carregar, criar, editar e excluir tarefas
+│   └── usuarios.js        // Scripts JS para gerenciamento de usuários
+│
+├── 📁 views
+│   ├── categorias.ejs     // Página visual para listar e adicionar categorias
+│   ├── form.ejs           // Página de formulário para criar ou editar uma tarefa
+│   ├── index.ejs          // Página inicial com a lista de tarefas
+│   └── usuarios.ejs       // Página para visualizar e interagir com os usuários
+````
+
+Essa separação permite uma organização clara entre:
+
+- Visualização (`views/`): onde estão os arquivos HTML com sintaxe EJS, que são renderizados diretamente pelo Express.
+
+- Scripts (`public/*.js`): responsáveis pela lógica de interação com a API (fetch, manipulação do DOM, eventos).
+
+- Estilo (`styles.css`): define o visual da aplicação, como cores, fontes, botões, responsividade e layout geral.
+
+Essa organização permite reutilização de estilos, modularização de funcionalidades e facilita a manutenção do código.
+
+
+
+
