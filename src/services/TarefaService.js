@@ -17,7 +17,6 @@ async function criarTarefaService(dados) {
   return result.rows[0];
 }
 
-
 async function listarTarefasService() {
   const query = 'SELECT * FROM tarefa ORDER BY data_criacao DESC';
   const result = await db.query(query);

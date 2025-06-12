@@ -3,7 +3,7 @@ const express = require('express');
 const app = express();
 const db = require('./src/config/db.js');
 const path = require('path');
-const tarefaService = require('./src/services/TarefaService'); // Importado para usar na rota "/"
+const tarefaService = require('./src/services/TarefaService');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
@@ -15,11 +15,11 @@ app.set('views', path.join(__dirname, 'src/views'));
 // Servir arquivos estáticos
 app.use("/public", express.static(path.join(__dirname, "src/public")));
 
-// Carregar as rotas da API
+// Rotas da API
 const routes = require('./src/routes');
 app.use('/api', routes);
 
-// Rota para exibir index.ejs com lista de tarefas
+// Página inicial com lista de tarefas
 app.get("/", async (req, res) => {
   try {
     const tasks = await tarefaService.listarTarefasService();
@@ -30,7 +30,29 @@ app.get("/", async (req, res) => {
   }
 });
 
-// Testa a conexão com o banco de dados ao iniciar
+// Rota de edição visual de tarefa
+app.get("/tarefas/editar/:id", async (req, res) => {
+  try {
+    const task = await tarefaService.buscarTarefaPorIdService(req.params.id);
+    if (!task) return res.status(404).send("Tarefa não encontrada");
+    res.render("form", { task });
+  } catch (err) {
+    console.error("Erro ao buscar tarefa:", err);
+    res.status(500).send("Erro interno");
+  }
+});
+
+// Rota visual de usuários
+app.get('/usuarios', (req, res) => {
+  res.render('usuarios');
+});
+
+// Rota visual de categorias
+app.get('/categorias', (req, res) => {
+  res.render('categorias');
+});
+
+// Inicia o servidor após testar o banco
 db.query('SELECT NOW()')
   .then(result => {
     console.log('Conectado ao banco de dados PostgreSQL');
@@ -43,13 +65,5 @@ db.query('SELECT NOW()')
   })
   .catch(err => {
     console.error('Erro ao conectar ao banco de dados:', err);
-    process.exit(1); // Encerra o app se não conectar
+    process.exit(1);
   });
-
-app.get('/usuarios', (req, res) => {
-  res.render('usuarios');
-});
-
-app.get('/categorias', (req, res) => {
-  res.render('categorias');
-});
